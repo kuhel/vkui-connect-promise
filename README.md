@@ -1,10 +1,10 @@
-# vkui-connect
+# vkui-connect-promise
 
-Пакет для интеграции VK Apps-приложений с официальными клиентами VK для iOS, Android и Web на основе промисов.
+Пакет для интеграции VK Apps-приложений с официальными клиентами VK для iOS, Android и Web с шиной событий на промисах.
 
 ## Подключение
 ```js
-import * as connect from '@vkontakte/vkui-connect';
+import connect from '@vkontakte/vkui-connect';
 ```
 
 ## Пример использования
