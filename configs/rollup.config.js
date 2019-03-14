@@ -2,6 +2,8 @@ import { babelSetup } from '../configs/config';
 import babel from 'rollup-plugin-babel';
 import replace from 'rollup-plugin-replace';
 import { uglify } from 'rollup-plugin-uglify';
+import resolve from 'rollup-plugin-node-resolve';
+import commonJS from 'rollup-plugin-commonjs';
 import pkg from '../package.json';
 
 const cusomIsArray = (maybeArr) => Array.isArray(maybeArr) ? maybeArr : [maybeArr];
@@ -30,8 +32,11 @@ const createConfig = ({ output, env } = {}) => {
 
   return {
     input: 'src/index.js',
+    external: ['@babel/polyfill'],
     plugins: [
       babel(babelSetup),
+      resolve(),
+      commonJS(),
       env && replace({
         'process.env.NODE_ENV': JSON.stringify(env),
       }),
@@ -55,12 +60,5 @@ export default [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'es' },
     ],
-  }),
-  createConfig({
-    output: {
-      file: 'build/vk-connect-promise.min.js',
-      format: 'umd',
-    },
-    env: 'production',
   }),
 ];

@@ -1,4 +1,4 @@
-// import 'promise-polyfill/src/polyfill';
+import '@babel/polyfill';
 import './custom-event-polyfill';
 /* global window, parent */
 /* eslint no-restricted-globals: ["off", "parent"] */

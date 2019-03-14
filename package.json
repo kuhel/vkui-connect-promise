@@ -53,5 +53,8 @@
   "browserslist": [
     "defaults",
     "ie >= 11"
-  ]
+  ],
+  "dependencies": {
+    "@babel/polyfill": "^7.2.5"
+  }
 }
