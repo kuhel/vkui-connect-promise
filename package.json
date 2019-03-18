@@ -4,7 +4,6 @@
   "description": "",
   "main": "build/vk-connect-promise.js",
   "module": "build/vk-connect-promise.es.js",
-  "unpkg": "build/vk-connect-promise.min.js",
   "files": [
     "build",
     "src"
