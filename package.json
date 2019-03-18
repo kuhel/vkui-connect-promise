@@ -1,6 +1,6 @@
 {
   "name": "vkui-connect-promise",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "",
   "main": "build/vk-connect-promise.js",
   "module": "build/vk-connect-promise.es.js",
