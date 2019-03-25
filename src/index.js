@@ -2,18 +2,16 @@
 /* eslint no-restricted-globals: ["off", "parent"] */
 import '@babel/polyfill';
 import './custom-event-polyfill';
-import getUrlParams from './get-url-params';
+import DESKTOP_EVENTS from './desktop-events';
 
 const FUNCTION = 'function';
 const UNDEFINED = 'undefined';
-const EVENT_PREFIX = 'VKWebApp';
 const isClient = typeof window !== UNDEFINED;
 const androidBridge = isClient && window.AndroidBridge;
 const iosBridge = isClient && window.webkit && window.webkit.messageHandlers;
 const isWeb = !androidBridge && !iosBridge;
 const eventType = isWeb ? 'message' : 'VKWebAppEvent';
 const promises = {};
-let desktopEvents = [];
 let method_counter = 0;
 
 window.addEventListener(eventType, (event) => {
@@ -23,9 +21,6 @@ window.addEventListener(eventType, (event) => {
     if (event.data && event.data.data) {
       response = { ...event.data };
       promise = promises[response.data.request_id];
-      if (response.type === 'VkWebAppInitResult' && response.data['events_list']) {
-        desktopEvents = [ ...response.data['events_list'] ];
-      }
     }
   } else if (event.detail && event.detail.data) {
     response = { ...event.detail };
@@ -48,10 +43,6 @@ window.addEventListener(eventType, (event) => {
 });
 
 export default (() => {
-  const urlParams = getUrlParams(window.location.href);
-  if (urlParams['vk_events']) {
-    desktopEvents = urlParams['vk_events'].split(',').map((event) => EVENT_PREFIX + event);
-  }
   return {
     /**
      * Sends a message to native client
@@ -101,7 +92,7 @@ export default (() => {
 
       if (iosBridge && iosBridge[handler] && typeof iosBridge[handler].postMessage === FUNCTION) return true;
 
-      if (~desktopEvents.indexOf(handler)) return true;
+      if (~DESKTOP_EVENTS.indexOf(handler)) return true;
 
       return false;
     },
